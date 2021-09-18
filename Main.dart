@@ -14,6 +14,8 @@ var menuMap = {
   "Sewa Motor": 1,
   "Cek Saldo": 2,
   "Isi Saldo": 3,
+  "Ganti Akun": 4,
+  "Keluar": 5,
 };
 
 List<Users> users = [
@@ -22,31 +24,42 @@ List<Users> users = [
   Users('Merdeka', "roykoayam123", 70000),
 ];
 
-late Users user;
+Users? user;
 
-bool checkAccount() {
-  bool isLogin = false;
+void checkAccount() {
+  // bool isLogin = false;
   print("\n Silahkan Masukan Password Anda");
   var pass = stdin.readLineSync();
-  for (Users usr in users) {
-    if (pass == usr.getPassword()) {
-      user = usr;
-      isLogin = true;
-    }
-  }
-  return isLogin;
-}
 
-void checkLogin() {
-  if (checkAccount()) {
+  users.forEach((Users userFun) {
+    if (userFun.getPassword() == pass) user = userFun;
+  });
+
+  if (user != null) {
     home();
   } else {
-    main();
+    checkAccount();
   }
+
+  // for (Users usr in users) {
+  //   if (pass == usr.getPassword()) {
+  //     user = usr;
+  //     isLogin = true;
+  //   }
+  // }
+  // return isLogin;
 }
 
+// void checkLogin() {
+//   if (checkAccount()) {
+//     home();
+//   } else {
+//     main();
+//   }
+// }
+
 void home() {
-  String name = user.getName();
+  String name = user!.getName();
   print("Selamat Datang ${name}");
 
   menuMap.forEach((name, num) {
@@ -60,16 +73,56 @@ void inputOption() {
   int input = int.parse(stdin.readLineSync()!);
   switch (input) {
     case 1:
+      sewaMotor();
       break;
     case 2:
+      checkBalance();
       break;
     case 3:
+      addSaldo();
       break;
-
+    case 4:
+      user = null;
+      checkAccount();
+      break;
+    case 5:
     default:
       print("Harap Masukan yang benar Bambank");
-      inputOption();
+      exit(0);
   }
+}
+
+void inputMotor() {
+  int input = int.parse(stdin.readLineSync()!);
+  switch (input) {
+    case 1:
+      rentMotor("Supra", 20000);
+      break;
+    case 2:
+      rentMotor("Jupyter", 30000);
+      break;
+    case 3:
+      rentMotor("Safu", 35000);
+      break;
+    case 4:
+      rentMotor("Megapro", 40000);
+      break;
+    default:
+      print("Harap Masukan yang benar Bambank");
+      inputMotor();
+  }
+}
+
+void rentMotor(String name, int price) {
+  if (user!.getBalance() > price) {
+    updateBalance(-price);
+    print("Selamat Transaksi Berhasil \n");
+    print(
+        "Anda Menyewa Motor ${name} \n sisa saldo anda saat ini adalah ${user!.getBalance()}");
+  } else {
+    print("Maaf Saldo Anda Tidak Mencukupi");
+  }
+  home();
 }
 
 void sewaMotor() {
@@ -79,6 +132,26 @@ void sewaMotor() {
     numbers++;
     print("${numbers}. ${name} Biaya sewa Rp ${price} /jam \n");
   });
+  inputMotor();
+}
+
+void checkBalance() {
+  var balanceNow = user!.getBalance();
+  print("\n Your Balance is ${balanceNow}");
+  home();
+}
+
+void addSaldo() {
+  print("Silahkan Masukan Nominal Inputan Saldo");
+  int addSaldo = int.parse(stdin.readLineSync()!);
+  updateBalance(addSaldo);
+  print("Saldo anda Sekarang adalah ${user!.getBalance()}");
+  home();
+}
+
+void updateBalance(int nominal) {
+  var balance = user!.getBalance() + nominal;
+  user!.setBalance(balance);
 }
 
 late int price;
@@ -86,4 +159,5 @@ late int price;
 void main() {
   print("Selamat Datang Di Peminjaman Motor");
   print("Silahkan Melakukan Login Account terlebih dahulu");
+  checkAccount();
 }

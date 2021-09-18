@@ -13,6 +13,10 @@ class Users {
     return password;
   }
 
+  int getBalance() {
+    return balance;
+  }
+
   setBalance(int balance) {
     this.balance = balance;
   }
