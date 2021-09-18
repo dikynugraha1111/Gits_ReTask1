@@ -27,7 +27,6 @@ List<Users> users = [
 Users? user;
 
 void checkAccount() {
-  // bool isLogin = false;
   print("\n Silahkan Masukan Password Anda");
   var pass = stdin.readLineSync();
 
@@ -40,23 +39,7 @@ void checkAccount() {
   } else {
     checkAccount();
   }
-
-  // for (Users usr in users) {
-  //   if (pass == usr.getPassword()) {
-  //     user = usr;
-  //     isLogin = true;
-  //   }
-  // }
-  // return isLogin;
 }
-
-// void checkLogin() {
-//   if (checkAccount()) {
-//     home();
-//   } else {
-//     main();
-//   }
-// }
 
 void home() {
   String name = user!.getName();
