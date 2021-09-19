@@ -27,17 +27,21 @@ Users? user;
 
 void checkAccount() {
   print("\n Silahkan Masukan Password Anda");
-  var pass = stdin.readLineSync();
 
-  users.forEach((Users userFun) {
-    if (userFun.getPassword() == pass) user = userFun;
-  });
+  int i = 0;
+  do {
+    var pass = stdin.readLineSync();
+    users.forEach((Users userFun) {
+      if (userFun.getPassword() == pass) user = userFun;
+    });
 
-  if (user != null) {
-    home();
-  } else {
-    checkAccount();
-  }
+    if (user != null) {
+      return home();
+    } else {
+      print("Maaf Password anda salah, silahkan masukan ulang");
+      i++;
+    }
+  } while (i < 3);
 }
 
 void home() {
