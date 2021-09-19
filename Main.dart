@@ -1,16 +1,15 @@
 import 'dart:io';
-
 import 'users.dart';
 
 //note Jenis Motor dan Harga dengan Map {Nama:Pin}
-var productMap = {
+Map<String, int> productMap = {
   "Supra": 20000,
   "Jupyter": 30000,
   "Safu": 35000,
   "Megapro": 40000
 };
 
-var menuMap = {
+Map<String, int> menuMap = {
   "Sewa Motor": 1,
   "Cek Saldo": 2,
   "Isi Saldo": 3,
@@ -119,7 +118,7 @@ void sewaMotor() {
 }
 
 void checkBalance() {
-  var balanceNow = user!.getBalance();
+  int balanceNow = user!.getBalance();
   print("\n Your Balance is ${balanceNow}");
   home();
 }
@@ -133,7 +132,7 @@ void addSaldo() {
 }
 
 void updateBalance(int nominal) {
-  var balance = user!.getBalance() + nominal;
+  int balance = user!.getBalance() + nominal;
   user!.setBalance(balance);
 }
 
