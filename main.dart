@@ -30,11 +30,14 @@ void checkAccount() {
 
   int i = 0;
   do {
-    var pass = stdin.readLineSync();
-    users.forEach((Users userFun) {
-      if (userFun.getPassword() == pass) user = userFun;
-    });
-
+    try {
+      var pass = stdin.readLineSync();
+      users.forEach((Users userFun) {
+        if (userFun.getPassword() == pass) user = userFun;
+      });
+    } catch (e) {
+      print("Masukan password");
+    }
     if (user != null) {
       return home();
     } else {
@@ -56,46 +59,60 @@ void home() {
 }
 
 void inputOption() {
-  int input = int.parse(stdin.readLineSync()!);
-  switch (input) {
-    case 1:
-      sewaMotor();
-      break;
-    case 2:
-      checkBalance();
-      break;
-    case 3:
-      addSaldo();
-      break;
-    case 4:
-      user = null;
-      checkAccount();
-      break;
-    case 5:
-    default:
-      print("Harap Masukan yang benar Bambank");
-      exit(0);
+  var inp = stdin.readLineSync() ?? "5";
+  try {
+    int input = int.parse(inp);
+    switch (input) {
+      case 1:
+        sewaMotor();
+        break;
+      case 2:
+        checkBalance();
+        break;
+      case 3:
+        addSaldo();
+        break;
+      case 4:
+        user = null;
+        checkAccount();
+        break;
+      case 5:
+      default:
+        print("Harap Masukan yang benar Bambank - OUT ente");
+        exit(0);
+    }
+  } catch (e) {
+    print("Masukan ANGKA sesuai MENU yang DISEDIAKAN");
+    print("Silahkan Masukan Ulang :");
+    inputOption();
   }
 }
 
 void inputMotor() {
-  int input = int.parse(stdin.readLineSync()!);
-  switch (input) {
-    case 1:
-      rentMotor("Supra", 20000);
-      break;
-    case 2:
-      rentMotor("Jupyter", 30000);
-      break;
-    case 3:
-      rentMotor("Safu", 35000);
-      break;
-    case 4:
-      rentMotor("Megapro", 40000);
-      break;
-    default:
-      print("Harap Masukan yang benar Bambank");
-      inputMotor();
+  var inp = stdin.readLineSync() ?? "5";
+  try {
+    int input = int.parse(inp);
+    switch (input) {
+      case 1:
+        rentMotor("Supra", 20000);
+        break;
+      case 2:
+        rentMotor("Jupyter", 30000);
+        break;
+      case 3:
+        rentMotor("Safu", 35000);
+        break;
+      case 4:
+        rentMotor("Megapro", 40000);
+        break;
+      default:
+        print("Harap Masukan yang benar Bambank");
+        inputMotor();
+    }
+  } catch (e) {
+    print("Masukan ANGKA sesuai MENU yang DISEDIAKAN");
+    print("Silahkan Masukan Ulang :");
+    inputMotor();
   }
 }
 
